@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/dashboardFragment">
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.mynewsportal.fragment.DashboardFragment"
+        android:label="fragment_dashboar"
+        tools:layout="@layout/fragment_dashboard" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.mynewsportal.fragment.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.mynewsportal.fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_listBeritaFragment"
+            app:destination="@id/listBeritaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listBeritaFragment"
+        android:name="com.example.mynewsportal.fragment.ListBeritaFragment"
+        android:label="fragment_list_berita"
+        tools:layout="@layout/fragment_list_berita" >
+        <argument
+            android:name="searchKeywords"
+            app:argType="string" />
+    </fragment>
+</navigation>

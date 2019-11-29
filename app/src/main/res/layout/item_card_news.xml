@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/item_card_news_sumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Kompas.com" />
+
+        <TextView
+            android:id="@+id/item_card_news_judul"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:text="@string/dummy_judulBerita"
+            android:textColor="@android:color/black"
+            android:textSize="17sp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@id/item_image_container"
+            app:layout_constraintStart_toStartOf="@+id/item_card_news_sumber"
+            app:layout_constraintTop_toBottomOf="@+id/item_card_news_sumber" />
+
+        <TextView
+            android:id="@+id/item_card_news_tanggal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="18/11/2019"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/item_card_news_judul"
+            app:layout_constraintTop_toBottomOf="@+id/item_image_container" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item_image_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/item_card_news_sumber">
+
+            <ImageView
+                android:id="@+id/item_card_news_gambar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@drawable/img_newsimagedummy"/>
+        </androidx.cardview.widget.CardView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/activity_top_margin"
+            app:layout_constraintTop_toBottomOf="@id/item_card_news_tanggal"
+            app:layout_constraintStart_toStartOf="@+id/item_card_news_tanggal"
+            style="@style/Divider.Horizontal"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MyNewsPortal</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_news_detail">NewsDetailActivity</string>
+    <string name="dummy_judulBerita">Bella Hadid donasikan 600 pohon hapus jejak karbonnya</string>
+    <string name="text_contentNewsDummy">Bella Hadid is trying to make a dent in her own carbon footprint. Hadid took to Instagram on Wednesday to express some regret over her rigorous travelling schedule. In an attempt to make-up for all the flying she does, the supermodel has promised to donate 600 trees for planting immediately and will likely donate more through 2019. “Donating 600 trees to be planted, 20 for each flight I took these past three months and probably will continue for the rest of the year,” she wrote. “It makes me sad how much my job affects my carbon footprint and of how brutally climate change is obviously affecting the world.” “Mother Nature needs some love,” she continued. “I’ll be starting with my home in California and of course the Amazon for the most recent wildfires, but please reach out and let me know which locations need to be shown some love as well, all regions welcome. Hadid has had a lot of time to reflect on her carbon footprint while gazing out the windows of planes. “I know it’s not much, but when I fly, I look out the window and see so many beautiful, extensive forests, so much land and trees but also so much that needs lots of help,” she shared. “Think about the animals too💛 anyways. Once I get home I’m definitely planting my own tree outside.” Her commitment to planting trees touched fellow supermodel Winnie Harlow. “Love this, Bells, thanks for sharing your research,” Harlow commented. “Imma get on this.”</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_search">Search</string>
+    <string name="title_settings">User</string>
+    <string name="fragmentdashboard">Articles you\'ve followed</string>
+    <string name="fragmentsearch">fragmentSearch</string>
+    <string name="fragment_user">User Preferences and Settings Here</string>
+    <string name="search_news_worldwide">Search news and articles worldwide</string>
+    <string name="title_home">Home</string>
+    <string name="title_notifications">Notifications</string>
+</resources>

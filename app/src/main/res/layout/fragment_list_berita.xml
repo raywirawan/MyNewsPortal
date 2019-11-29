@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_listberita"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:listitem="@layout/item_card_news"
+        tools:itemCount="3"
+        android:paddingTop="32dp"
+        android:paddingBottom="67dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        />
+
+    <ProgressBar
+        android:id="@+id/pb_list_berita"
+        android:visibility="visible"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="65dp"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
