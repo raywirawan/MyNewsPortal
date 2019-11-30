@@ -8,7 +8,11 @@
         android:id="@+id/dashboardFragment"
         android:name="com.example.mynewsportal.fragment.DashboardFragment"
         android:label="fragment_dashboar"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_detailBeritaFragment"
+            app:destination="@id/detailBeritaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userFragment"
         android:name="com.example.mynewsportal.fragment.UserFragment"
@@ -31,5 +35,17 @@
         <argument
             android:name="searchKeywords"
             app:argType="string" />
+        <action
+            android:id="@+id/action_listBeritaFragment_to_detailBeritaFragment"
+            app:destination="@id/detailBeritaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailBeritaFragment"
+        android:name="com.example.mynewsportal.fragment.DetailBeritaFragment"
+        android:label="fragment_detail_berita"
+        tools:layout="@layout/fragment_detail_berita" >
+        <argument
+            android:name="article"
+            app:argType="com.example.mynewsportal.models.Article" />
     </fragment>
 </navigation>

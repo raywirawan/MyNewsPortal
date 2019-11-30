@@ -1,9 +1,10 @@
-package com.example.mynewsportal;
+package com.example.mynewsportal.activity;
 
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.mynewsportal.R;
 import com.example.mynewsportal.models.Article;
 import com.example.mynewsportal.utils.MyUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,7 +38,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         assert article != null;
         tvJudul.setText(article.getTitle());
         tvSumber.setText(article.getName());
-        tvWaktu.setText(MyUtils.getTanggalFormat(article.getPublishedAt())+" | "+MyUtils.getJamFormat(article.getPublishedAt()));
+        String waktu = MyUtils.getTanggalFormat(article.getPublishedAt())+" | "+MyUtils.getJamFormat(article.getPublishedAt());
+        tvWaktu.setText(waktu);
         tvKonten.setText(article.getContent());
         tvPenulis.setText(article.getAuthor());
         if (article.getUrlToImage()!=null){

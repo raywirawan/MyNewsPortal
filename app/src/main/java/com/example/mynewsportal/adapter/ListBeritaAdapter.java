@@ -2,7 +2,6 @@ package com.example.mynewsportal.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
-import com.example.mynewsportal.NewsDetailActivity;
+import com.example.mynewsportal.activity.NewsDetailActivity;
 import com.example.mynewsportal.R;
+import com.example.mynewsportal.fragment.SearchFragment;
+import com.example.mynewsportal.fragment.SearchFragmentDirections;
 import com.example.mynewsportal.models.Article;
 import com.example.mynewsportal.utils.MyUtils;
 
@@ -29,6 +26,12 @@ import java.util.ArrayList;
 public class ListBeritaAdapter extends RecyclerView.Adapter<ListBeritaAdapter.ListBeritaViewHolder> {
 
     private ArrayList<Article> mData = new ArrayList<>();
+
+    //set Callback to Fragment
+    private OnItemClickCallback onItemClickCallback;
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
+    }
 
     public void setData(ArrayList<Article> items) {
         mData.clear();
@@ -54,7 +57,7 @@ public class ListBeritaAdapter extends RecyclerView.Adapter<ListBeritaAdapter.Li
         return mData.size();
     }
 
-    public class ListBeritaViewHolder extends RecyclerView.ViewHolder {
+    public class ListBeritaViewHolder extends RecyclerView.ViewHolder{
         TextView textViewSumber, textViewJudul, textViewTanggal;
         ImageView imageGambar;
 
@@ -78,10 +81,12 @@ public class ListBeritaAdapter extends RecyclerView.Adapter<ListBeritaAdapter.Li
                     .into(imageGambar);
 
             itemView.setOnClickListener(view -> {
-                Intent intent = new Intent(itemView.getContext(), NewsDetailActivity.class);
-                intent.putExtra("article", article);
-                itemView.getContext().startActivity(intent);
+                onItemClickCallback.onItemClicked(article);
             });
         }
+    }
+
+    public interface OnItemClickCallback {
+        void onItemClicked(Article article);
     }
 }

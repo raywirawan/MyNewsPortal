@@ -6,16 +6,18 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mynewsportal.R;
@@ -39,8 +41,9 @@ public class ListBeritaFragment extends Fragment implements RequestDataCallback{
 
     //View Components
     private ListBeritaAdapter adapter;
-    private ProgressBar pbLoading;
-    private RequestData request;
+    private TextView tvSearchResult, tvSearchRefresh;
+    private RequestDataViewModel request;
+    private SwipeRefreshLayout refreshLayoutList;
     private static final String TAG = "ListBeritaFragment";
 
     @Override
@@ -49,47 +52,66 @@ public class ListBeritaFragment extends Fragment implements RequestDataCallback{
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_list_berita, container, false);
 
-//        Show Progress Bar Loading
-        pbLoading = v.findViewById(R.id.pb_list_berita);
-        pbLoading.setVisibility(View.VISIBLE);
+        tvSearchResult = v.findViewById(R.id.tv_list_berita_result);
+        tvSearchRefresh = v.findViewById(R.id.tv_refreshHelper);
+        //Show Progress Bar Loading
+        refreshLayoutList = v.findViewById(R.id.container_rv_listberita);
+        refreshLayoutList.setRefreshing(true);
 
         //Request Data from API
-        request = new RequestData();
-        request.setRequestDataCallback(this);
-        request.setArticle(getArguments().getString("searchKeywords"));
-        request.getArticles().observe(getViewLifecycleOwner(), articles -> {
-            adapter.setData(articles);
-            Log.d(TAG, "onCreateView: "+articles.size());
-        });
+        fetchData();
+
 
         //Attach recyclerView
         RecyclerView recyclerView = v.findViewById(R.id.rv_listberita);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //Set Listener Refresh
+        refreshLayoutList.setOnRefreshListener(() -> {
+            fetchData();
+        });
+
         //Attach Adapter to recyclerView
         adapter = new ListBeritaAdapter();
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
-
-
+        adapter.setOnItemClickCallback(new ListBeritaAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(Article article) {
+                Navigation.findNavController(v).navigate(ListBeritaFragmentDirections.actionListBeritaFragmentToDetailBeritaFragment(article));
+            }
+        });
         return v;
     }
+
+    private void fetchData(){
+        request = new RequestDataViewModel();
+        request.setRequestDataCallback(this);
+        request.setArticle(getArguments().getString("searchKeywords"));
+        request.getArticles().observe(getViewLifecycleOwner(), articles -> {
+            adapter.setData(articles);
+            adapter.notifyDataSetChanged();
+        });
+    }
     @Override
-    public void onSuccessRetrieve(){
-        pbLoading.setVisibility(View.GONE);
+    public void onSuccessRetrieve(int results){
+        refreshLayoutList.setRefreshing(false);
+        String result = "Showing "+results+" top results for '" +getArguments().getString("searchKeywords") +"'";
+        tvSearchResult.setText(result);
         Log.d(TAG, "onSuccessRetrieve: Callback");
     }
     @Override
     public void onFailureRetrieve(String errorMsg){
-        pbLoading.setVisibility(View.GONE);
+        refreshLayoutList.setRefreshing(false);
+        tvSearchRefresh.setVisibility(View.VISIBLE);
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
     };
 
 }
-class RequestData extends ViewModel {
+class RequestDataViewModel extends ViewModel {
 
-    RequestDataCallback callback;
-    private static final String TAG = "RequestData";
+    private RequestDataCallback callback;
+    private static final String TAG = "RequestDataViewModel";
     //API
     private static final String API_KEY = "38b8efbd1980491babcbc35f8fc096bb";
     private MutableLiveData<ArrayList<Article>> listArticle = new MutableLiveData<>();
@@ -100,6 +122,8 @@ class RequestData extends ViewModel {
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<Article> listItems = new ArrayList<>();
         String url = "https://newsapi.org/v2/everything?q="+keyword+"&apiKey="+API_KEY;
+
+        //Establish connection and request
         client.get(url, new AsyncHttpResponseHandler() {
             //If request API return success
             @Override
@@ -125,7 +149,8 @@ class RequestData extends ViewModel {
                         listItems.add(article);
                     }
                     listArticle.postValue(listItems);
-                    callback.onSuccessRetrieve();
+                    //number of query results
+                    callback.onSuccessRetrieve(listItems.size());
                 } catch (JSONException e) {
                     System.out.println("Exception : "+e.getMessage());
                 }
@@ -146,6 +171,6 @@ class RequestData extends ViewModel {
     }
 }
 interface RequestDataCallback {
-    void onSuccessRetrieve();
+    void onSuccessRetrieve(int results);
     void onFailureRetrieve(String errorMsg);
 }
