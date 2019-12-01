@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,28 +8,57 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_DashboardHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:text="@string/fragmentdashboard"
         android:textColor="@color/colorAccent"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/activity_top_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tv_followNotFound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:text="You haven't followed anything yet"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginTop="@dimen/activity_top_margin"
+        app:layout_constraintStart_toStartOf="@+id/tv_DashboardHeader"
+        app:layout_constraintTop_toBottomOf="@+id/tv_DashboardHeader" />
+
+    <TextView
+        android:id="@+id/tv_articlesForYou"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:text="Here's some articles for you : "
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_followNotFound"
+        app:layout_constraintTop_toBottomOf="@+id/tv_followNotFound" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_articlesForYou"
+        android:id="@+id/rv_dashboard_listberita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="20dp"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_card_news_grid" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,7 +36,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
-        android:paddingTop="@dimen/activity_top_margin"
+        android:paddingTop="50dp"
         android:id="@+id/tv_refreshHelper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

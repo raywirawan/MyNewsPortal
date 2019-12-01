@@ -37,7 +37,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_listBeritaFragment_to_detailBeritaFragment"
-            app:destination="@id/detailBeritaFragment" />
+            app:destination="@id/detailBeritaFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim" />
+        <argument
+            android:name="category"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/detailBeritaFragment"
