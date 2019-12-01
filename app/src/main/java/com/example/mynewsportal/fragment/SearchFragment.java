@@ -15,31 +15,73 @@ import android.widget.EditText;
 import com.example.mynewsportal.R;
 
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements View.OnClickListener{
 
-    Button btnSearch;
+    Button btnSearch, btnEntrmnt, btnGenrl, btnHealt, btnSci, btnSport, btnTech, btnBusins;
     EditText etSearchBerita;
+    View v;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_search, container, false);
+        v = inflater.inflate(R.layout.fragment_search, container, false);
 
         etSearchBerita = v.findViewById(R.id.et_search_searchNews);
         btnSearch = v.findViewById(R.id.btn_search_search);
+        btnEntrmnt = v.findViewById(R.id.btn_search_entertainment);
+        btnGenrl = v.findViewById(R.id.btn_search_general);
+        btnHealt = v.findViewById(R.id.btn_search_health);
+        btnSci = v.findViewById(R.id.btn_search_science);
+        btnSport = v.findViewById(R.id.btn_search_sports);
+        btnTech = v.findViewById(R.id.btn_search_technology);
+        btnBusins = v.findViewById(R.id.btn_search_business);
 
-        etSearchBerita = v.findViewById(R.id.et_search_searchNews);
-        btnSearch.setOnClickListener(view ->{
-            String keyword = etSearchBerita.getText().toString();
-            if (keyword.length() >= 3){
-                Navigation.findNavController(v).navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword));
-            }else {
-                etSearchBerita.setError("Enter at least 3 characters");
-            }
-        });
+        btnSearch.setOnClickListener(this);
+        btnEntrmnt.setOnClickListener(this);
+        btnGenrl.setOnClickListener(this);
+        btnHealt.setOnClickListener(this);
+        btnSci.setOnClickListener(this);
+        btnSport.setOnClickListener(this);
+        btnTech.setOnClickListener(this);
+        btnBusins.setOnClickListener(this);
 
         return v;
+    }
+
+    @Override
+    public void onClick(View view) {
+        String keyword = etSearchBerita.getText().toString();
+        switch (view.getId()){
+            case R.id.btn_search_search:
+                if (keyword.length() >= 3){
+                    Navigation.findNavController(v).navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword,""));
+                }else {
+                    etSearchBerita.setError("Enter at least 3 characters");
+                }
+                break;
+            case R.id.btn_search_entertainment:
+                Navigation.findNavController(v).navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword,btnEntrmnt.getText().toString()));
+                break;
+            case R.id.btn_search_sports:
+                Navigation.findNavController(v).navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword,btnSport.getText().toString()));
+                break;
+            case R.id.btn_search_science:
+                Navigation.findNavController(v).navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword,btnSci.getText().toString()));
+                break;
+            case R.id.btn_search_technology:
+                Navigation.findNavController(v).navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword,btnTech.getText().toString()));
+                break;
+            case R.id.btn_search_general:
+                Navigation.findNavController(v).navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword,btnGenrl.getText().toString()));
+                break;
+            case R.id.btn_search_business:
+                Navigation.findNavController(v).navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword,btnBusins.getText().toString()));
+                break;
+            case R.id.btn_search_health:
+                Navigation.findNavController(v).navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword, btnHealt.getText().toString()));
+                break;
+        }
     }
 }

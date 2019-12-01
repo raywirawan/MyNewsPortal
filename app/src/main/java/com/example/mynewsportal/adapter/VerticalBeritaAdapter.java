@@ -1,7 +1,6 @@
 package com.example.mynewsportal.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.mynewsportal.activity.NewsDetailActivity;
 import com.example.mynewsportal.R;
-import com.example.mynewsportal.fragment.SearchFragment;
-import com.example.mynewsportal.fragment.SearchFragmentDirections;
 import com.example.mynewsportal.models.Article;
 import com.example.mynewsportal.utils.MyUtils;
 
 import java.util.ArrayList;
 
-public class ListBeritaAdapter extends RecyclerView.Adapter<ListBeritaAdapter.ListBeritaViewHolder> {
+public class VerticalBeritaAdapter extends RecyclerView.Adapter<VerticalBeritaAdapter.VerticalBeritaViewHolder> {
 
     private ArrayList<Article> mData = new ArrayList<>();
 
@@ -41,14 +36,14 @@ public class ListBeritaAdapter extends RecyclerView.Adapter<ListBeritaAdapter.Li
 
     @NonNull
     @Override
-    public ListBeritaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public VerticalBeritaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_news, parent, false);
-        return new ListBeritaViewHolder(mView);
+        return new VerticalBeritaViewHolder(mView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListBeritaViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VerticalBeritaViewHolder holder, int position) {
         holder.bind(mData.get(position));
     }
 
@@ -57,11 +52,11 @@ public class ListBeritaAdapter extends RecyclerView.Adapter<ListBeritaAdapter.Li
         return mData.size();
     }
 
-    public class ListBeritaViewHolder extends RecyclerView.ViewHolder{
+    public class VerticalBeritaViewHolder extends RecyclerView.ViewHolder{
         TextView textViewSumber, textViewJudul, textViewTanggal;
         ImageView imageGambar;
 
-        public ListBeritaViewHolder(@NonNull View itemView) {
+        public VerticalBeritaViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewJudul = itemView.findViewById(R.id.item_card_news_judul);
             textViewSumber = itemView.findViewById(R.id.item_card_news_sumber);
@@ -79,13 +74,11 @@ public class ListBeritaAdapter extends RecyclerView.Adapter<ListBeritaAdapter.Li
                     .load(article.getUrlToImage())
                     .apply(new RequestOptions().placeholder(R.drawable.ic_insert_photo_black_24dp))
                     .into(imageGambar);
-
             itemView.setOnClickListener(view -> {
                 onItemClickCallback.onItemClicked(article);
             });
         }
     }
-
     public interface OnItemClickCallback {
         void onItemClicked(Article article);
     }

@@ -16,12 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mynewsportal.R;
-import com.example.mynewsportal.adapter.ListBeritaAdapter;
+import com.example.mynewsportal.adapter.VerticalBeritaAdapter;
 import com.example.mynewsportal.models.Article;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -37,12 +36,13 @@ import cz.msebera.android.httpclient.Header;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListBeritaFragment extends Fragment implements RequestDataCallback{
+public class ListBeritaFragment extends Fragment implements ListBerita {
 
     //View Components
-    private ListBeritaAdapter adapter;
+    private VerticalBeritaAdapter adapter;
     private TextView tvSearchResult, tvSearchRefresh;
-    private RequestDataViewModel request;
+    private View v;
+    private ListBeritaViewModel request;
     private SwipeRefreshLayout refreshLayoutList;
     private static final String TAG = "ListBeritaFragment";
 
@@ -50,44 +50,42 @@ public class ListBeritaFragment extends Fragment implements RequestDataCallback{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_list_berita, container, false);
+        if (v == null) {
+            v = inflater.inflate(R.layout.fragment_list_berita, container, false);
 
-        tvSearchResult = v.findViewById(R.id.tv_list_berita_result);
-        tvSearchRefresh = v.findViewById(R.id.tv_refreshHelper);
-        //Show Progress Bar Loading
-        refreshLayoutList = v.findViewById(R.id.container_rv_listberita);
-        refreshLayoutList.setRefreshing(true);
+            tvSearchResult = v.findViewById(R.id.tv_list_berita_result);
+            tvSearchRefresh = v.findViewById(R.id.tv_refreshHelper);
+            //Show Progress Bar Loading
+            refreshLayoutList = v.findViewById(R.id.container_rv_listberita);
+            refreshLayoutList.setRefreshing(true);
 
-        //Request Data from API
-        fetchData();
-
-
-        //Attach recyclerView
-        RecyclerView recyclerView = v.findViewById(R.id.rv_listberita);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //Set Listener Refresh
-        refreshLayoutList.setOnRefreshListener(() -> {
+            //Request Data from API
             fetchData();
-        });
 
-        //Attach Adapter to recyclerView
-        adapter = new ListBeritaAdapter();
-        adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickCallback(new ListBeritaAdapter.OnItemClickCallback() {
-            @Override
-            public void onItemClicked(Article article) {
-                Navigation.findNavController(v).navigate(ListBeritaFragmentDirections.actionListBeritaFragmentToDetailBeritaFragment(article));
-            }
-        });
+            //Attach recyclerView
+            RecyclerView recyclerView = v.findViewById(R.id.rv_listberita);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            //Set Listener Refresh
+            refreshLayoutList.setOnRefreshListener(() -> fetchData());
+
+            //Attach Adapter to recyclerView
+            adapter = new VerticalBeritaAdapter();
+            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);
+            adapter.setOnItemClickCallback(article ->
+                    Navigation.findNavController(v).navigate(ListBeritaFragmentDirections.actionListBeritaFragmentToDetailBeritaFragment(article)));
+
+        }
         return v;
     }
 
     private void fetchData(){
-        request = new RequestDataViewModel();
+        String keyword = getArguments().getString("searchKeywords");
+        String category = getArguments().getString("category");
+        request = new ListBeritaViewModel();
         request.setRequestDataCallback(this);
-        request.setArticle(getArguments().getString("searchKeywords"));
+        request.setArticle(category, keyword);
         request.getArticles().observe(getViewLifecycleOwner(), articles -> {
             adapter.setData(articles);
             adapter.notifyDataSetChanged();
@@ -96,7 +94,16 @@ public class ListBeritaFragment extends Fragment implements RequestDataCallback{
     @Override
     public void onSuccessRetrieve(int results){
         refreshLayoutList.setRefreshing(false);
-        String result = "Showing "+results+" top results for '" +getArguments().getString("searchKeywords") +"'";
+        String keyword = getArguments().getString("searchKeywords");
+        String category = getArguments().getString("category");
+        String result;
+        if ((keyword.length() > 0) &&(category.length() >0)){
+            result = "Showing "+results+" top results for '" +keyword+ "' from '" +category+"'";
+        } else  if (category.length()>0){
+            result = "Showing "+results+" top results from category '" + category +"'";
+        } else  {
+            result = "Showing "+results+" top results for '" +getArguments().getString("searchKeywords") +"'";
+        }
         tvSearchResult.setText(result);
         Log.d(TAG, "onSuccessRetrieve: Callback");
     }
@@ -106,23 +113,29 @@ public class ListBeritaFragment extends Fragment implements RequestDataCallback{
         tvSearchRefresh.setVisibility(View.VISIBLE);
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
     };
-
 }
-class RequestDataViewModel extends ViewModel {
 
-    private RequestDataCallback callback;
-    private static final String TAG = "RequestDataViewModel";
+class ListBeritaViewModel extends ViewModel {
+
+    private ListBerita callback;
+    private static final String TAG = "ListBeritaViewModel";
     //API
     private static final String API_KEY = "38b8efbd1980491babcbc35f8fc096bb";
     private MutableLiveData<ArrayList<Article>> listArticle = new MutableLiveData<>();
 
-    void setArticle(String keywords) {
+    void setArticle(String category, String keywords) {
         // request API
-        String keyword = keywords;
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<Article> listItems = new ArrayList<>();
-        String url = "https://newsapi.org/v2/everything?q="+keyword+"&apiKey="+API_KEY;
+        String url;
+        String language = "en";
 
+        if (category.length()==0)
+            url = "http://newsapi.org/v2/everything?q="+ keywords +"&language="+ language +"&apiKey="+API_KEY;
+        else
+            url = "http://newsapi.org/v2/top-headlines?q="+ keywords + "&category=" + category +"&language="+ language + "&apiKey="+API_KEY;
+
+        Log.d(TAG, "URL "+url);
         //Establish connection and request
         client.get(url, new AsyncHttpResponseHandler() {
             //If request API return success
@@ -166,11 +179,11 @@ class RequestDataViewModel extends ViewModel {
     LiveData<ArrayList<Article>> getArticles() {
         return listArticle;
     }
-    void setRequestDataCallback(RequestDataCallback callback){
+    void setRequestDataCallback(ListBerita callback){
         this.callback = callback;
     }
 }
-interface RequestDataCallback {
+interface ListBerita {
     void onSuccessRetrieve(int results);
     void onFailureRetrieve(String errorMsg);
 }
