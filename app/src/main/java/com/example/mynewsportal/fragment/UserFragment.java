@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.mynewsportal.R;
 
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +27,7 @@ import java.util.Set;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class UserFragment extends Fragment {
+    private String sharedPrefFile = "com.mynewsportal.preferences";
 
     @Nullable
     @Override
@@ -34,7 +36,7 @@ public class UserFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_user, container, false);
 
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
 
         //load saved settings
         String savedLang = sharedPref.getString("language", "English");

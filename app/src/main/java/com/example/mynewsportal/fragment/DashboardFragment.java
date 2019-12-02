@@ -54,7 +54,7 @@ public class DashboardFragment extends Fragment implements Dashboard{
     private TextView[] textViews;
     private ProgressBar[] pbs;
     private Set<String> followingSet;
-
+    private String sharedPrefFile = "com.mynewsportal.preferences";
 
     @Nullable
     @Override
@@ -78,6 +78,7 @@ public class DashboardFragment extends Fragment implements Dashboard{
             textViews[3] = v.findViewById(R.id.tv_following_3);
             textViews[4] = v.findViewById(R.id.tv_following_4);
 
+
             //Instance recyclerViews and adapters;
             RecyclerView[] recyclerViews = new RecyclerView[5];
             recyclerViews[0] = v.findViewById(R.id.rv_dashboard_listberita);
@@ -93,10 +94,11 @@ public class DashboardFragment extends Fragment implements Dashboard{
             }
 
             //get saved following
-            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-            Set<String> defaultData = new HashSet<>();
-            defaultData.add("Technology");
-            followingSet = sharedPref.getStringSet("following", defaultData);
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+            followingSet = sharedPref.getStringSet("following", new HashSet<String>());
+            if (followingSet.size()==0){
+                textViews[0].setText("You haven't follow any articles yet\nClick 'Follow' to get started");
+            }
             //load data from API
             fetchData();
 
@@ -122,7 +124,7 @@ public class DashboardFragment extends Fragment implements Dashboard{
         int i = 0;
         for (String keyword : followingSet) {
             textViews[i].setVisibility(View.VISIBLE);
-            textViews[i].setText("Here's some articles about "+keyword);
+            textViews[i].setText("Articles about "+keyword);
             pbs[i].setVisibility(View.VISIBLE);
             request = new DashboardViewModel();
             request.setDashboardCallback(this);

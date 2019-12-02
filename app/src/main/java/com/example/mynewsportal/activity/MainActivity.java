@@ -18,6 +18,7 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String sharedPrefFile = "com.mynewsportal.preferences";
     private static final String TAG = "MAIN";
 
     @Override
@@ -28,16 +29,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor preferencesEditor = sharedPref.edit();
-
-        Set<String> following = new HashSet<String>();
-        following.add("Ariana Grande");
-        following.add("Taylor Swift");
-
-        preferencesEditor.putStringSet("following",following);
-        preferencesEditor.apply();
-
-        Log.d(TAG, "onCreate: "+following.size());
     }
 }

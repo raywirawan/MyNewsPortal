@@ -62,9 +62,9 @@ public class DetailBeritaFragment extends Fragment {
         String waktu = MyUtils.getTanggalFormat(article.getPublishedAt())+" | "+MyUtils.getJamFormat(article.getPublishedAt());
         tvWaktu.setText(waktu);
         String konten = article.getContent();
-        String kontenFormatted = konten.substring(0, konten.indexOf(91));
-
-        tvKonten.setText(kontenFormatted);
+        if (konten != "null")
+            konten = konten.substring(0, konten.indexOf(91));
+        tvKonten.setText(konten);
         tvPenulis.setText(article.getAuthor());
         if (article.getUrlToImage()!=null){
             Glide.with(this)

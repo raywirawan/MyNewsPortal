@@ -48,6 +48,7 @@ public class ListBeritaFragment extends Fragment implements ListBerita {
     private ListBeritaViewModel request;
     private SwipeRefreshLayout refreshLayoutList;
     private static final String TAG = "ListBeritaFragment";
+    private String sharedPrefFile = "com.mynewsportal.preferences";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +84,7 @@ public class ListBeritaFragment extends Fragment implements ListBerita {
     }
 
     private void fetchData(){
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(sharedPrefFile,Context.MODE_PRIVATE);
         String savedLang = sharedPref.getString("language", "English");
         String keyword = getArguments().getString("searchKeywords");
         String category = getArguments().getString("category");

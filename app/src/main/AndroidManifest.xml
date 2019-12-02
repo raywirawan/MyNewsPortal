@@ -9,11 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AddFollowActivity"></activity>
-        <activity android:name=".activity.WebViewActivity" />
+        <activity android:name=".activity.AddFollowActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.WebViewActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity"
-            android:label="MyNewsPortal">
+            android:label="MyNewsPortal"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

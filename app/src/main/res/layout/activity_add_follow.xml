@@ -5,6 +5,147 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AddFollowActivity">
+    tools:context=".activity.AddFollowActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_addfollow_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:text="Add articles to follow"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <View
+        android:layout_height="3dp"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        style="@style/Divider.Horizontal"/>
+
+<!--    TV1-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/container_et_addfollow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_addfollow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    TV2-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/container_et_addfollow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_addfollow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    TV3-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/container_et_addfollow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:visibility="visible"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_addfollow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    TV4-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/container_et_addfollow3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:visibility="visible"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_addfollow3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/container_et_addfollow4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:visibility="visible"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_addfollow4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_addfollow"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="Add new"
+            android:drawableLeft="@drawable/ic_add_black_24dp"
+            android:drawableTint="@color/colorAccent"
+            android:layout_weight="1"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_deletefollow"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="Delete all"
+            android:drawableLeft="@drawable/ic_delete_black_24dp"
+            android:drawableTint="@color/colorAccent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_saveFollow"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:text="Save"
+        android:layout_gravity="center"
+        android:drawableTint="@color/colorAccent"/>
+
+
+
 
 </LinearLayout>
