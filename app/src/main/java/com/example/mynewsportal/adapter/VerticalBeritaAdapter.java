@@ -72,7 +72,7 @@ public class VerticalBeritaAdapter extends RecyclerView.Adapter<VerticalBeritaAd
             textViewSumber.setText(article.getName());
             Glide.with(itemView.getContext())
                     .load(article.getUrlToImage())
-                    .apply(new RequestOptions().placeholder(R.drawable.ic_insert_photo_black_24dp))
+                    .apply(new RequestOptions().placeholder(R.drawable.placeholder))
                     .into(imageGambar);
             itemView.setOnClickListener(view -> {
                 onItemClickCallback.onItemClicked(article);

@@ -16,10 +16,17 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:text="@string/fragmentdashboard"
         android:textColor="@color/colorAccent"
-        android:textSize="35sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/div_dashboard_header"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        app:layout_constraintTop_toBottomOf="@+id/tv_DashboardHeader"
+        style="@style/Divider.Horizontal"/>
 
     <TextView
         android:id="@+id/tv_followNotFound"
@@ -29,9 +36,9 @@
         android:layout_marginTop="@dimen/activity_top_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:text="You haven't followed anything yet"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/tv_DashboardHeader"
-        app:layout_constraintTop_toBottomOf="@+id/tv_DashboardHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/div_dashboard_header" />
 
     <TextView
         android:id="@+id/tv_articlesForYou"
@@ -41,7 +48,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:text="Here's some articles for you : "
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/tv_followNotFound"
         app:layout_constraintTop_toBottomOf="@+id/tv_followNotFound" />
 
@@ -60,5 +67,16 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="6"
         tools:listitem="@layout/item_card_news_grid" />
+    <ProgressBar
+        android:id="@+id/pb_dashboard"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="65dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_articlesForYou"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,7 +78,6 @@ public class ListBeritaFragment extends Fragment implements ListBerita {
             recyclerView.setAdapter(adapter);
             adapter.setOnItemClickCallback(article ->
                     Navigation.findNavController(v).navigate(ListBeritaFragmentDirections.actionListBeritaFragmentToDetailBeritaFragment(article)));
-
         }
         return v;
     }
@@ -136,9 +135,9 @@ class ListBeritaViewModel extends ViewModel {
         String language = MyUtils.getLanguageFormat(savedLang);
 
         if (category.length()==0)
-            url = "http://newsapi.org/v2/everything?q="+ keywords +"&language="+ language +"&apiKey="+API_KEY;
+            url = "http://newsapi.org/v2/everything?qInTitle="+ keywords +"&language="+ language +"&apiKey="+API_KEY;
         else
-            url = "http://newsapi.org/v2/top-headlines?q="+ keywords + "&category=" + category +"&language="+ language + "&apiKey="+API_KEY;
+            url = "http://newsapi.org/v2/top-headlines?q="+ keywords + "&category=" + category + "&apiKey="+API_KEY;
 
         Log.d(TAG, "URL "+url);
         //Establish connection and request

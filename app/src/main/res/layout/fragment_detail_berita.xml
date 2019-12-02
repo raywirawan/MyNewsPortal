@@ -10,10 +10,11 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="55dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -90,6 +91,16 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_newsDetail_gambarBerita"
                 android:text="@string/text_contentNewsDummy"
                 />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_detail_read_more"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                app:layout_constraintTop_toBottomOf="@+id/tv_newsDetail_contentBerita"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="read full aticle"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

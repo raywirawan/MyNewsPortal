@@ -1,6 +1,7 @@
 package com.example.mynewsportal.fragment;
 
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.mynewsportal.R;
+import com.example.mynewsportal.activity.WebViewActivity;
 import com.example.mynewsportal.models.Article;
 import com.example.mynewsportal.utils.MyUtils;
 
@@ -29,6 +32,7 @@ import com.example.mynewsportal.utils.MyUtils;
 public class DetailBeritaFragment extends Fragment {
     private TextView tvJudul, tvSumber, tvPenulis, tvWaktu, tvKonten;
     private ImageView ivGambarBerita;
+    private Button btnReadMore;
 
     public DetailBeritaFragment() {
         // Required empty public constructor
@@ -48,6 +52,7 @@ public class DetailBeritaFragment extends Fragment {
         tvWaktu = v.findViewById(R.id.tv_newsDetail_waktuTerbit);
         tvSumber = v.findViewById(R.id.tv_newsDetail_sumberBerita);
         ivGambarBerita = v.findViewById(R.id.iv_newsDetail_gambarBerita);
+        btnReadMore = v.findViewById(R.id.btn_detail_read_more);
 
         Article article = getArguments().getParcelable("article");
 
@@ -56,7 +61,10 @@ public class DetailBeritaFragment extends Fragment {
         tvSumber.setText(article.getName());
         String waktu = MyUtils.getTanggalFormat(article.getPublishedAt())+" | "+MyUtils.getJamFormat(article.getPublishedAt());
         tvWaktu.setText(waktu);
-        tvKonten.setText(article.getContent());
+        String konten = article.getContent();
+        String kontenFormatted = konten.substring(0, konten.indexOf(91));
+
+        tvKonten.setText(kontenFormatted);
         tvPenulis.setText(article.getAuthor());
         if (article.getUrlToImage()!=null){
             Glide.with(this)
@@ -76,6 +84,12 @@ public class DetailBeritaFragment extends Fragment {
         } else {
             ivGambarBerita.setVisibility(View.GONE);
         }
+
+        btnReadMore.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), WebViewActivity.class);
+            intent.putExtra("url", article.getUrl());
+            startActivity(intent);
+        });
         return v;
     }
 }

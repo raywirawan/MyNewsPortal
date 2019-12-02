@@ -12,8 +12,8 @@
     <string name="title_settings">User</string>
     <string name="fragmentdashboard">Articles you\'ve followed</string>
     <string name="fragmentsearch">fragmentSearch</string>
-    <string name="fragment_user">User Preferences and Settings Here</string>
-    <string name="search_news_worldwide">Search news and articles worldwide</string>
+    <string name="fragment_user">User Preferences and Settings</string>
+    <string name="search_news_worldwide">Search News And Articles</string>
     <string name="title_home">Home</string>
     <string name="title_notifications">Notifications</string>
 </resources>

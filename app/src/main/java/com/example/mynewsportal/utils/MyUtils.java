@@ -29,4 +29,19 @@ public class MyUtils {
         String time = splitFormat[1].substring(0,5);
         return time;
     }
+    public static String getLanguageFormat(String lang){
+        if (lang.equals("English")){
+            return "en";
+        } else if (lang.equals("French")){
+            return "fr";
+        } else if (lang.equals("Español")){
+            return "es";
+        } else if (lang.equals("German")){
+            return "de";
+        } else if (lang.equals("Italian")){
+            return "it";
+        } else if (lang.equals("Dutch")){
+            return "nl";
+        } else return "en";
+    }
 }

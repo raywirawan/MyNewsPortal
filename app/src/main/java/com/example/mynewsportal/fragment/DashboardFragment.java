@@ -1,5 +1,7 @@
 package com.example.mynewsportal.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,17 +17,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mynewsportal.R;
 import com.example.mynewsportal.adapter.HorizontalBeritaAdapter;
 import com.example.mynewsportal.models.Article;
+import com.example.mynewsportal.utils.MyUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -39,6 +45,8 @@ public class DashboardFragment extends Fragment implements Dashboard{
     private View v;
     private DashboardViewModel request;
     private HorizontalBeritaAdapter adapter;
+    private ProgressBar pb1;
+    private TextView tv1;
 
 
     @Nullable
@@ -49,6 +57,7 @@ public class DashboardFragment extends Fragment implements Dashboard{
         if (v == null){
             v = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+            pb1 = v.findViewById(R.id.pb_dashboard);
             fetchData();
 
             RecyclerView recyclerView = v.findViewById(R.id.rv_dashboard_listberita);
@@ -64,50 +73,54 @@ public class DashboardFragment extends Fragment implements Dashboard{
         return v;
     }
     private void fetchData(){
+        pb1.setVisibility(View.VISIBLE);
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String savedLang = sharedPref.getString("language", "English");
         request = new DashboardViewModel();
         request.setDashboardCallback(this);
-        request.setArticle("");
+        request.setArticle("Technology", savedLang);
         request.getArticles().observe(getViewLifecycleOwner(), articles -> {
             adapter.setData(articles);
             adapter.notifyDataSetChanged();
+
         });
     }
 
     @Override
     public void onSuccessRetrieve(int results) {
-
+        pb1.setVisibility(View.GONE);
     }
 
     @Override
     public void onFailureRetrieve(String errorMsg) {
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
+        pb1.setVisibility(View.GONE);
     }
 }
 
 class DashboardViewModel extends ViewModel {
 
     private Dashboard callback;
-    private static final String TAG = "ListBeritaViewModel";
+    private static final String TAG = "DashboardViewModel";
     //API
     private static final String API_KEY = "38b8efbd1980491babcbc35f8fc096bb";
     private MutableLiveData<ArrayList<Article>> listArticle = new MutableLiveData<>();
 
-    void setArticle(String arguments) {
+
+    void setArticle(String arguments, String lang) {
         String category = "entertainment";
-        String language = "en";
+        String language = MyUtils.getLanguageFormat(lang);
         String country = "us";
         String url;
-        String endpoint = "top-headlines";
+        String endpoint = "everything";
         // request API
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<Article> listItems = new ArrayList<>();
-        if (endpoint.equals("everything")){
-            url = "http://newsapi.org/v2/"+endpoint+"?q=" + arguments +"&language="+ language + "&apiKey=" + API_KEY;
-        }else{
-            url = "http://newsapi.org/v2/"+endpoint+"?q=" + arguments +"&language="+ language + "&country="+ country +"&apiKey=" + API_KEY;
-        }
 
-        Log.d(TAG, "setArticle: "+url);
+        url = "http://newsapi.org/v2/"+endpoint+"?q=" + arguments +"&language="+ language + "&apiKey=" + API_KEY;
+
+
+        Log.d(TAG, "RequestURL: "+url);
 
         //Establish connection and request
         client.get(url, new AsyncHttpResponseHandler() {

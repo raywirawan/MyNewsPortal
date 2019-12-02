@@ -71,7 +71,7 @@ public class HorizontalBeritaAdapter extends RecyclerView.Adapter<HorizontalBeri
             textViewSumber.setText(article.getName());
             Glide.with(itemView.getContext())
                     .load(article.getUrlToImage())
-                    .apply(new RequestOptions().placeholder(R.drawable.img_image_load))
+                    .apply(new RequestOptions().placeholder(R.drawable.placeholder))
                     .into(imageGambar);
             itemView.setOnClickListener(view -> {
                 onItemClickCallback.onItemClicked(article);

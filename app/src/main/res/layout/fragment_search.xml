@@ -1,48 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".fragment.SearchFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/tv_search_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_top_margin"
-        android:layout_marginBottom="10dp"
         android:text="@string/search_news_worldwide"
         android:textColor="@color/colorAccent"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/tv_search1"
+        android:textSize="20sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        style="@style/Divider.Horizontal"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_searchNewsLayout"
+        style="@style/TextInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_top_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="Or choose one of category below :"
-        android:textColor="@color/colorAccent"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/search_searchNewsLayout"
-        app:layout_constraintTop_toBottomOf="@id/btn_search_search" />
+        android:background="@android:color/transparent"
+        android:hint="Search News and Articles"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:helperTextEnabled="true">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
-
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search_searchNews"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_search_search"
         android:layout_width="match_parent"
@@ -50,114 +45,111 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="Search"
-        app:layout_constraintEnd_toEndOf="@+id/search_searchNewsLayout"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/search_searchNewsLayout"
-        app:layout_constraintTop_toBottomOf="@+id/search_searchNewsLayout" />
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text="Search"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_search_entertainment"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="entertainment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_search1" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_search_sports"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="sports"
-        app:layout_constraintStart_toEndOf="@id/btn_search_science"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search_entertainment" />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_search_science"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="science"
-        app:layout_constraintStart_toEndOf="@id/btn_search_health"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search_entertainment" />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_search_general"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="general"
-        app:layout_constraintStart_toEndOf="@id/btn_search_entertainment"
-        app:layout_constraintTop_toBottomOf="@+id/tv_search1" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_search_health"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="health"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search_entertainment"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_search_technology"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="technology"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search_health"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_search_business"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="business"
-        app:layout_constraintStart_toEndOf="@id/btn_search_technology"
-        app:layout_constraintTop_toBottomOf="@id/btn_search_health"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/search_searchNewsLayout"
-        style="@style/TextInput"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="30dp"
-        android:background="@android:color/transparent"
-        android:hint="What are you looking for"
-        app:boxStrokeColor="@color/colorPrimary"
-        app:helperTextEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_search_header">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_search_searchNews"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp">
+        <LinearLayout
+            android:id="@+id/linear12"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_search1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_top_margin"
+                android:text="Or choose one of category below :"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/Divider.Horizontal"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_search_entertainment"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="entertainment"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/Divider.Horizontal"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_search_technology"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="technology"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/Divider.Horizontal"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_search_science"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="science"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/Divider.Horizontal"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_search_business"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="business"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/Divider.Horizontal"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_search_sports"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="sports"
+                app:layout_constraintStart_toEndOf="@id/btn_search_science"
+                app:layout_constraintTop_toBottomOf="@+id/btn_search_entertainment" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/Divider.Horizontal"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_search_health"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="health"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_search_entertainment"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/Divider.Horizontal"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
