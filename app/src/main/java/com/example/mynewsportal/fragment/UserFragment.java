@@ -19,6 +19,10 @@ import android.widget.Toast;
 
 import com.example.mynewsportal.R;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class UserFragment extends Fragment {

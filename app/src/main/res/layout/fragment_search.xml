@@ -15,7 +15,8 @@
         android:layout_marginTop="@dimen/activity_top_margin"
         android:text="@string/search_news_worldwide"
         android:textColor="@color/colorAccent"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textStyle="bold"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"

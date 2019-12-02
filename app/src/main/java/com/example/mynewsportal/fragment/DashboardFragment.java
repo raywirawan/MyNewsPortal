@@ -1,6 +1,7 @@
 package com.example.mynewsportal.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -17,23 +18,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mynewsportal.R;
+import com.example.mynewsportal.activity.AddFollowActivity;
 import com.example.mynewsportal.adapter.HorizontalBeritaAdapter;
 import com.example.mynewsportal.models.Article;
 import com.example.mynewsportal.utils.MyUtils;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -44,9 +50,10 @@ public class DashboardFragment extends Fragment implements Dashboard{
 
     private View v;
     private DashboardViewModel request;
-    private HorizontalBeritaAdapter adapter;
-    private ProgressBar pb1;
-    private TextView tv1;
+    private HorizontalBeritaAdapter[] adapters;
+    private TextView[] textViews;
+    private ProgressBar[] pbs;
+    private Set<String> followingSet;
 
 
     @Nullable
@@ -57,44 +64,90 @@ public class DashboardFragment extends Fragment implements Dashboard{
         if (v == null){
             v = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-            pb1 = v.findViewById(R.id.pb_dashboard);
+            pbs = new ProgressBar[5];
+            pbs[0] = v.findViewById(R.id.pb_dashboard);
+            pbs[1] = v.findViewById(R.id.pb_dashboard_1);
+            pbs[2] = v.findViewById(R.id.pb_dashboard_2);
+            pbs[3] = v.findViewById(R.id.pb_dashboard_3);
+            pbs[4] = v.findViewById(R.id.pb_dashboard_4);
+
+            textViews = new TextView[5];
+            textViews[0] = v.findViewById(R.id.tv_following);
+            textViews[1] = v.findViewById(R.id.tv_following_1);
+            textViews[2] = v.findViewById(R.id.tv_following_2);
+            textViews[3] = v.findViewById(R.id.tv_following_3);
+            textViews[4] = v.findViewById(R.id.tv_following_4);
+
+            //Instance recyclerViews and adapters;
+            RecyclerView[] recyclerViews = new RecyclerView[5];
+            recyclerViews[0] = v.findViewById(R.id.rv_dashboard_listberita);
+            recyclerViews[1] = v.findViewById(R.id.rv_dashboard_listberita_1);
+            recyclerViews[2] = v.findViewById(R.id.rv_dashboard_listberita_2);
+            recyclerViews[3] = v.findViewById(R.id.rv_dashboard_listberita_3);
+            recyclerViews[4] = v.findViewById(R.id.rv_dashboard_listberita_4);
+
+            adapters = new HorizontalBeritaAdapter[5];
+            for (int i = 0; i < adapters.length; i++) {
+                adapters[i] = new HorizontalBeritaAdapter();
+                adapters[i].notifyDataSetChanged();
+            }
+
+            //get saved following
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            Set<String> defaultData = new HashSet<>();
+            defaultData.add("Technology");
+            followingSet = sharedPref.getStringSet("following", defaultData);
+            //load data from API
             fetchData();
 
-            RecyclerView recyclerView = v.findViewById(R.id.rv_dashboard_listberita);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            recyclerView.setLayoutManager(layoutManager);
             //Attach Adapter to recyclerView
-            adapter = new HorizontalBeritaAdapter();
-            adapter.notifyDataSetChanged();
-            recyclerView.setAdapter(adapter);
-            adapter.setOnItemClickCallback(article ->
-                    Navigation.findNavController(v).navigate(DashboardFragmentDirections.actionDashboardFragmentToDetailBeritaFragment(article)));
+            for (int i = 0; i < followingSet.size(); i++) {
+                recyclerViews[i].setAdapter(adapters[i]);
+                adapters[i].setOnItemClickCallback(article ->
+                        Navigation.findNavController(v).navigate(DashboardFragmentDirections.actionDashboardFragmentToDetailBeritaFragment(article)));
+            }
+            //Listener floating action button
+            ExtendedFloatingActionButton fab = v.findViewById(R.id.fab_tambah);
+            fab.setOnClickListener(view -> {
+                Intent intent = new Intent(getContext(), AddFollowActivity.class);
+                startActivity(intent);
+            });
         }
         return v;
     }
     private void fetchData(){
-        pb1.setVisibility(View.VISIBLE);
+        //get saved language
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String savedLang = sharedPref.getString("language", "English");
-        request = new DashboardViewModel();
-        request.setDashboardCallback(this);
-        request.setArticle("Technology", savedLang);
-        request.getArticles().observe(getViewLifecycleOwner(), articles -> {
-            adapter.setData(articles);
-            adapter.notifyDataSetChanged();
-
-        });
+        int i = 0;
+        for (String keyword : followingSet) {
+            textViews[i].setVisibility(View.VISIBLE);
+            textViews[i].setText("Here's some articles about "+keyword);
+            pbs[i].setVisibility(View.VISIBLE);
+            request = new DashboardViewModel();
+            request.setDashboardCallback(this);
+            request.setArticle(keyword, savedLang);
+            final int y = i;
+            request.getArticles().observe(getViewLifecycleOwner(), articles -> {
+                adapters[y].setData(articles);
+                adapters[y].notifyDataSetChanged();
+                if (articles!=null){
+                    pbs[y].setVisibility(View.GONE);
+                }
+            });
+            i++;
+        }
     }
 
     @Override
     public void onSuccessRetrieve(int results) {
-        pb1.setVisibility(View.GONE);
+//        pb.setVisibility(View.GONE);
     }
 
     @Override
     public void onFailureRetrieve(String errorMsg) {
         Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
-        pb1.setVisibility(View.GONE);
+//        pb.setVisibility(View.GONE);
     }
 }
 

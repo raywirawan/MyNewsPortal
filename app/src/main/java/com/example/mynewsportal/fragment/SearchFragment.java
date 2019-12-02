@@ -13,12 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mynewsportal.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 
 public class SearchFragment extends Fragment implements View.OnClickListener{
 
     Button btnSearch, btnEntrmnt, btnHealt, btnSci, btnSport, btnTech, btnBusins;
     EditText etSearchBerita;
+    TextInputLayout searchLayout;
     View v;
 
     @Nullable
@@ -29,6 +31,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         v = inflater.inflate(R.layout.fragment_search, container, false);
 
         etSearchBerita = v.findViewById(R.id.et_search_searchNews);
+        searchLayout = v.findViewById(R.id.search_searchNewsLayout);
         btnSearch = v.findViewById(R.id.btn_search_search);
         btnEntrmnt = v.findViewById(R.id.btn_search_entertainment);
         btnHealt = v.findViewById(R.id.btn_search_health);
@@ -57,7 +60,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                     Navigation.findNavController(v)
                             .navigate(SearchFragmentDirections.actionSearchFragmentToListBeritaFragment(keyword,""));
                 }else {
-                    etSearchBerita.setError("Enter at least 3 characters");
+                    searchLayout.setError("Enter at least 3 characters");
                 }
                 break;
             case R.id.btn_search_entertainment:
