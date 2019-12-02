@@ -1,6 +1,8 @@
 package com.example.mynewsportal.fragment;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.example.mynewsportal.R;
 import com.example.mynewsportal.adapter.VerticalBeritaAdapter;
 import com.example.mynewsportal.models.Article;
+import com.example.mynewsportal.utils.MyUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -81,11 +84,13 @@ public class ListBeritaFragment extends Fragment implements ListBerita {
     }
 
     private void fetchData(){
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String savedLang = sharedPref.getString("language", "English");
         String keyword = getArguments().getString("searchKeywords");
         String category = getArguments().getString("category");
         request = new ListBeritaViewModel();
         request.setRequestDataCallback(this);
-        request.setArticle(category, keyword);
+        request.setArticle(category, keyword, savedLang);
         request.getArticles().observe(getViewLifecycleOwner(), articles -> {
             adapter.setData(articles);
             adapter.notifyDataSetChanged();
@@ -123,12 +128,12 @@ class ListBeritaViewModel extends ViewModel {
     private static final String API_KEY = "38b8efbd1980491babcbc35f8fc096bb";
     private MutableLiveData<ArrayList<Article>> listArticle = new MutableLiveData<>();
 
-    void setArticle(String category, String keywords) {
+    void setArticle(String category, String keywords, String savedLang) {
         // request API
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<Article> listItems = new ArrayList<>();
         String url;
-        String language = "en";
+        String language = MyUtils.getLanguageFormat(savedLang);
 
         if (category.length()==0)
             url = "http://newsapi.org/v2/everything?q="+ keywords +"&language="+ language +"&apiKey="+API_KEY;
